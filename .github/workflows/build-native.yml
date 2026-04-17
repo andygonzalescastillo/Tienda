@@ -1,0 +1,55 @@
+name: Build and Push Native Image
+
+# Se ejecuta al hacer push a estas ramas
+on:
+  push:
+    branches: [ "main", "master" ]
+    paths:
+      - 'backend/**' # Solo se activa si hay cambios en el backend
+
+env:
+  REGISTRY: ghcr.io
+  # Convierte tu repositorio al formato de imagen de Docker (ej: ghcr.io/tu-usuario/tienda)
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # -------------------------------------------------------------
+      # TAREA CLAVE: Aumentar la memoria Swap. 
+      # Esto evita que GraalVM crashee por RAM (le damos 10GB extra).
+      - name: Set up Swap Space
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 10
+
+      # Convierte el nombre del repositorio a minúsculas para que Docker lo acepte
+      - name: Lowercase Image Name
+        run: |
+          echo "IMAGE_NAME=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
+
+      # Iniciar sesión en el registro de paquetes de GitHub
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          # El token se provee automáticamente por GitHub Actions
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Construye y sube la imagen usando el Dockerfile
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          file: ./backend/Dockerfile
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend:latest

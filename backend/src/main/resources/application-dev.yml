@@ -1,0 +1,18 @@
+# ============================================================
+# PERFIL DE DESARROLLO
+# Activo por defecto en local
+# ============================================================
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+logging:
+  level:
+    com.tienda.backend: DEBUG
+    org.springframework.security: DEBUG

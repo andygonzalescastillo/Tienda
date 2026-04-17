@@ -1,0 +1,38 @@
+# ============================================================
+# GITIGNORE RAÍZ - MONOREPO TIENDA
+# ============================================================
+
+# --- Dependencias ---
+node_modules/
+
+# --- Builds ---
+dist/
+dist-ssr/
+target/
+build/
+
+# --- Environment ---
+.env
+.env.local
+.env.*.local
+
+# --- Logs ---
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- IDEs y Editores ---
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# --- OS ---
+.DS_Store
+Thumbs.db

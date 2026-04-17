@@ -1,0 +1,143 @@
+spring:
+  application:
+    name: backend
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  threads:
+    virtual:
+      enabled: true
+
+  # --- Base de Datos ---
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/${DB_NAME:tienda_db}}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: ${HIKARI_MAX_POOL:5}
+      minimum-idle: ${HIKARI_MIN_IDLE:1}
+      idle-timeout: 30000
+      max-lifetime: 600000
+      connection-timeout: 10000
+      keepalive-time: 60000
+
+  jpa:
+    open-in-view: false
+
+  # --- Redis ---
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      ssl:
+        enabled: ${REDIS_SSL:false}
+
+  # --- Correo (Brevo API) ---
+  mail:
+    username: ${EMAIL_USERNAME:noreply@tienda.com}
+    password: ${EMAIL_PASSWORD:dummy-key}
+    sender-name: ${EMAIL_SENDER_NAME:Tienda}
+
+  mvc:
+    problem-details:
+      enabled: true
+
+  # --- OAuth2 ---
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:dummy-id}
+            client-secret: ${GOOGLE_CLIENT_SECRET:dummy-secret}
+            scope: openid, profile, email
+            redirect-uri: ${OAUTH_REDIRECT_BASE_URL:{baseUrl}}/login/oauth2/code/{registrationId}
+          microsoft:
+            client-id: ${MICROSOFT_CLIENT_ID:dummy-id}
+            client-secret: ${MICROSOFT_CLIENT_SECRET:dummy-secret}
+            scope: openid, profile, email, User.Read
+            redirect-uri: ${OAUTH_REDIRECT_BASE_URL:{baseUrl}}/login/oauth2/code/{registrationId}
+            authorization-grant-type: authorization_code
+          facebook:
+            client-id: ${FACEBOOK_APP_ID:dummy-id}
+            client-secret: ${FACEBOOK_APP_SECRET:dummy-secret}
+            scope: email, public_profile
+            redirect-uri: ${OAUTH_REDIRECT_BASE_URL:{baseUrl}}/login/oauth2/code/{registrationId}
+          github:
+            client-id: ${GITHUB_CLIENT_ID:dummy-id}
+            client-secret: ${GITHUB_CLIENT_SECRET:dummy-secret}
+            scope: read:user, user:email
+            redirect-uri: ${OAUTH_REDIRECT_BASE_URL:{baseUrl}}/login/oauth2/code/{registrationId}
+        provider:
+          microsoft:
+            authorization-uri: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+            token-uri: https://login.microsoftonline.com/common/oauth2/v2.0/token
+            jwk-set-uri: https://login.microsoftonline.com/common/discovery/v2.0/keys
+            user-info-uri: https://graph.microsoft.com/oidc/userinfo
+            user-name-attribute: sub
+
+# --- Servidor ---
+server:
+  port: ${PORT:8080}
+  forward-headers-strategy: framework
+  tomcat:
+    threads:
+      max: ${TOMCAT_MAX_THREADS:10}
+      min-spare: 2
+
+# --- JWT ---
+jwt:
+  secret: ${JWT_SECRET:claveSecretaDeDesarrolloLocal_DebeSerAlMenos64Caracteres_1234567890!}
+  access-token:
+    expiration: ${JWT_ACCESS_EXPIRATION:900000}
+  refresh-token:
+    expiration: ${JWT_REFRESH_EXPIRATION:604800000}
+  max-sessions-per-user: ${JWT_MAX_SESSIONS:5}
+
+# --- Admin por defecto ---
+admin:
+  default:
+    email: ${ADMIN_EMAIL:admin@gmail.com}
+    password: ${ADMIN_PASSWORD:Admin123!}
+    nombre: ${ADMIN_NOMBRE:Super}
+    apellido: ${ADMIN_APELLIDO:Admin}
+
+# --- OTP ---
+security:
+  otp:
+    expiration-minutes: ${OTP_EXPIRATION_MINUTES:10}
+    max-attempts: ${OTP_MAX_ATTEMPTS:5}
+
+# --- Cookies ---
+cookie:
+  secure: ${COOKIE_SECURE:false}
+  domain: ${COOKIE_DOMAIN:}
+
+# --- Frontend ---
+frontend:
+  url: ${FRONTEND_URL:http://localhost:5173}
+  admin-url: ${FRONTEND_ADMIN_URL:http://localhost:5174}
+  oauth-callback-path: /oauth-callback
+  error-path: /?error=
+
+# --- Swagger ---
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+
+# --- Actuator ---
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true

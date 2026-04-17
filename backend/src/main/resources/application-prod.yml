@@ -1,0 +1,27 @@
+# ============================================================
+# PERFIL DE PRODUCCIÓN
+# Activo en Render con SPRING_PROFILES_ACTIVE=prod
+# ============================================================
+
+spring:
+  docker:
+    compose:
+      enabled: false
+  devtools:
+    restart:
+      enabled: false
+  flyway:
+    baseline-on-migrate: true
+  main:
+    lazy-initialization: true
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+# Deshabilitar Swagger en producción
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false

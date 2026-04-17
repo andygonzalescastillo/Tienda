@@ -1,0 +1,28 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://tienda-backend-latest-h8ht.onrender.com/api/:path*"
+    },
+    {
+      "source": "/auth/:path*",
+      "destination": "https://tienda-backend-latest-h8ht.onrender.com/auth/:path*"
+    },
+    {
+      "source": "/oauth2/:path*",
+      "destination": "https://tienda-backend-latest-h8ht.onrender.com/oauth2/:path*"
+    },
+    {
+      "source": "/login/oauth2/:path*",
+      "destination": "https://tienda-backend-latest-h8ht.onrender.com/login/oauth2/:path*"
+    },
+    {
+      "source": "/actuator/:path*",
+      "destination": "https://tienda-backend-latest-h8ht.onrender.com/actuator/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
