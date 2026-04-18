@@ -17,8 +17,8 @@ Una plataforma web con arquitectura escalable y moderna que incluye un sistema d
 
 Prueba el sistema en vivo en los siguientes enlaces:
 
-- 👤 **Frontend User:** [https://tu-enlace-user.com](https://tu-enlace-user.com)
-- 👑 **Frontend Admin:** [https://tu-enlace-admin.com](https://tu-enlace-admin.com)
+- 👤 **Frontend User:** [https://frontend-user-two.vercel.app](https://frontend-user-two.vercel.app)
+- 👑 **Frontend Admin:** [https://frontend-admin-ochre.vercel.app](https://frontend-admin-ochre.vercel.app)
 
 *(Opcional) Puedes ingresar al panel de administrador con estas credenciales de prueba:*
 > **Email:** admin@gmail.com  
